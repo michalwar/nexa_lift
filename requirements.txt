@@ -21,6 +21,7 @@ requests==2.31.0
 
 # Environment variable management
 python-decouple==3.8
+python_dotenv==1.0.0
 
 # JWT for authentication (if you plan to use token-based auth)
 PyJWT==2.8.0
