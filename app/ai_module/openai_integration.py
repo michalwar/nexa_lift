@@ -1,7 +1,16 @@
+import sys
+sys.path.append(r"D:\Projects\Git\nexa_lift")
+
 import os
 import openai
+import json
+
+from app.ai_module.prompts_eng import olympic_main_prompt
 
 from dotenv import load_dotenv
+
+
+
 
 load_dotenv(dotenv_path="./app/ai_module/.env")
 
@@ -16,7 +25,7 @@ class OpenAIIntegration:
         self,
         api_key: str,
         organization: str,
-        model: str = "gpt-3.5-turbo"
+        model: str = "gpt-3.5-turbo-16k"
         ):
         """
         Initialize OpenAI Integration.
@@ -79,8 +88,12 @@ if __name__ == "__main__":
     input_text = (
         "How well do you know workout plans, especially for Olympic weightlifting?"
     )
+    input_text = olympic_main_prompt
     response = openai_integrator.get_response(input_text)
     if response:
         print("AI Response:", response)
+
     else:
         print("Failed to get a response.")
+
+

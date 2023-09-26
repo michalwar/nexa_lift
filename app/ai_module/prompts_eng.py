@@ -1,31 +1,32 @@
-prompt_task = """TASK: Prepare a plan for one month of the `Olympic weightlifting workout training`;"""
 
-promopt_persona = """PERSONA: You are a personal trainer who is preparing a plan for one month of the `Olympic weightlifting workout training`;"""
+#prompt_task = """TASK: Prepare a plan for one month of the `Olympic weightlifting workout training`;"""
 
-promopt_context = f"""CONTEXT: Perform TASK based on the historical workout plans: {historical_workout_plans};"""
+#promopt_persona = """PERSONA: You are a personal trainer who is preparing a plan for one month of the `Olympic weightlifting workout training`;"""
+
+#promopt_context = f"""CONTEXT: Perform TASK based on the historical workout plans: {historical_workout};"""
+
 
 format_response = """
-                data = {
-                    "Week": [Week number],
-                    "Day": [Day number],
-                    "Workout": [Workout name],
-                    "Exercise": [Exercise name],
-                    "Sets": [Number of sets],
-                    "Reps": [Number of repetitions],
-                    "Tempo": [Tempo],
-                    "Rest": [Rest time between sets],
-                    "Notes": [Notes],
-                    "Exercise Type": [Type of exercise],
-                    "Exercise Muscle Group": [Muscle group],
-                    "Exercise Equipment": [Equipment],
-                    "Exercise Difficulty": [Difficulty],
-                    "Exercise Intensity": [Intensity],
-                    "Reasoning": [Reasoning for the exercise],"
-                    }
+**Response Template for Workout Plan**
+
+- **Week #[number]**:
+    - **Day #[number]**:
+        - **Workout Name**: [Workout Name or Description]
+        - **Intensity**: [Intensity Level e.g. High/Moderate/Low]
+        - **Reasoning**: [Brief reasoning behind the workout's purpose]
+        - **Exercises**:
+            - **Exercise**: [Exercise Name]
+            - **Sets**: [Number of Sets]
+            - **Reps**: [Number of Repetitions]
+            - **Tempo**: [Tempo, e.g., 2-1-1]
+            - **Rest**: [Rest Period]
+            - **Muscle Group**: [Targeted Muscle Group]
+
+Please fill in the [brackets] with the appropriate information.
 """
 
 
-format_example = """
+historical_workout = """
 workout_plan = {
     "Week 1": {
         "Day 1": {
@@ -152,4 +153,25 @@ workout_plan = {
     "Week 4": {...}
 }
 
+"""
+
+
+
+olympic_main_prompt = f"""
+Please adhere to the following guidelines for your response:
+
+`CONTEXT`: My past workout plans: [( {historical_workout} )].
+- Purpose: Offer information on what exercises, sets, reps, and weights I have used in the past. This will guide you in providing a progressive plan.
+
+`TASK`: Create a one-month Olympic weightlifting workout plan.
+- Purpose: Design a plan that continues from past workouts, ensuring progression and avoiding plateaus.
+
+`PERSONA`: An experienced Olympic weightlifting coach.
+- Purpose:  Ensure the plan is technically sound, safe, and tailored for Olympic weightlifting progression.
+
+`RESPONSE STRUCTURE`: Weekly breakdown of the workout plan: [( {format_response} )].
+- Purpose: Provide a day-by-day plan that's easy to follow and structured.
+
+`RESPONSE FORMAT`: Organized list format with clear subheadings for each week.
+- Purpose: Make the workout schedule easy to read and track by user.
 """
