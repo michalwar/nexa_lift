@@ -10,8 +10,6 @@ from app.ai_module.prompts_eng import olympic_main_prompt
 from dotenv import load_dotenv
 
 
-
-
 load_dotenv(dotenv_path="./app/ai_module/.env")
 
 api_key = os.getenv("OPENAI_API_KEY")

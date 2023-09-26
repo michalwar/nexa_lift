@@ -7,6 +7,7 @@
       - `openai_integration.py`
       - `custom_llm_integration.py`
       - `real_time_chat.py`
+      - `prompts_eng.py`
     - **user_management/**
       - `__init__.py`
       - `models.py` (User, Profile, ActivityLog models, etc.)
@@ -25,6 +26,8 @@
     - **security/**
       - `__init__.py`
       - `encryption.py` (Encryption, decryption logic, etc.)
+    - **server/**
+      - `server_call.py`
   - **migrations/** (If you're using something like Flask-Migrate)
   - **tests/**
     - **ai_tests/**
