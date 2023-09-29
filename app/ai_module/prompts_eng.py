@@ -5,6 +5,7 @@
 
 #promopt_context = f"""CONTEXT: Perform TASK based on the historical workout plans: {historical_workout};"""
 
+
 _format_response = """
 **Response Template for Workout Plan**
 
