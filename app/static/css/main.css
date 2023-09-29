@@ -1,0 +1,109 @@
+/* Resetting some default styles */
+body, h1, p, form {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica', Arial, sans-serif;
+    background-color: #F4F4F4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    padding: 20px;
+    background-color: #FFF;
+    text-align: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 24px;
+    color: #555;
+}
+
+.input-card {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-card form {
+    background-color: #FFF;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+}
+
+.input-card form label {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.input-card form input[type="text"], 
+.input-card form input[type="number"],
+.input-card form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.input-card form input[type="submit"] {
+    display: block;
+    margin: 30px auto 0;
+    background-color: #007BFF;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-card form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.response-card {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.response-card h2 {
+    font-size: 22px;
+    color: #333;
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-top: 4px solid black;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

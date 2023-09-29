@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="input-card">
+    <form id="workoutForm">
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" name="age" required>
+        </div>
+        <div class="form-group">
+            <label for="height">Height (cm):</label>
+            <input type="number" name="height" required>
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" name="weight" required>
+        </div>
+        <div class="form-group">
+            <label for="activity_level">Activity Level:</label>
+            <select id="activity_level" name="activity_level">
+                <option value="sedentary">Sedentary</option>
+                <option value="light">Light</option>
+                <option value="moderate">Moderate</option>
+                <option value="active">Active</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="goals">Goals:</label>
+            <select id="goals" name="goals">
+                <option value="strength">Strength</option>
+                <option value="endurance">Endurance</option>
+                <option value="weight_loss">Weight Loss</option>
+                <option value="mobility">Mobility</option>
+                <option value="technique">Technique</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" name="workout_query" placeholder="Additional preferences (optional)">
+        </div>
+            <input type="submit" value="Generate Workout Plan">
+    </form>
+</div>
+
+<div class="response-card">
+    <h2>Personalized Workout Plan</h2>
+    <div id="loadingSpinner" class="spinner" style="display:none;"></div>
+    <div id="workoutResponse"></div>
+</div>
+
+<script>
+document.getElementById('workoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();  // prevent form from actually submitting
+
+    const workoutQuery = document.querySelector("input[name='workout_query']").value;
+
+    // Clear the workoutResponse content
+    document.getElementById('workoutResponse').innerHTML = '';
+
+    // Show spinner when starting the request
+    document.getElementById('loadingSpinner').style.display = 'block';
+
+    fetch("/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `workout_query=${workoutQuery}`
+    })
+    .then(response => response.json())  // Assuming server returns JSON
+    .then(data => {
+        displayWorkoutData(data);
+        
+        // Hide spinner once data is displayed
+        document.getElementById('loadingSpinner').style.display = 'none';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+
+        // Hide spinner if an error occurs
+        document.getElementById('loadingSpinner').style.display = 'none';
+    });
+});
+
+function displayWorkoutData(data) {
+    const workoutResponse = document.getElementById('workoutResponse');
+
+    for (const week in data) {
+        const weekDiv = document.createElement('div');
+        const weekTitle = document.createElement('h3');
+        weekTitle.innerText = week;
+        weekDiv.appendChild(weekTitle);
+
+        const daysData = data[week];
+        for (const day in daysData) {
+            const dayDiv = document.createElement('div');
+            const dayTitle = document.createElement('h4');
+            dayTitle.innerText = day;
+            dayDiv.appendChild(dayTitle);
+
+            const workout = daysData[day];
+            for (const key in workout) {
+                if (key === "Exercises") {
+                    const exercisesList = document.createElement('ul');
+                    workout[key].forEach(exercise => {
+                        const exerciseItem = document.createElement('li');
+                        exerciseItem.innerText = exercise["Exercise name"];
+                        const detailsList = document.createElement('ul');
+
+                        for (const detailKey in exercise["Details"]) {
+                            const detailItem = document.createElement('li');
+                            detailItem.innerText = `${detailKey}: ${exercise["Details"][detailKey]}`;
+                            detailsList.appendChild(detailItem);
+                        }
+
+                        exerciseItem.appendChild(detailsList);
+                        exercisesList.appendChild(exerciseItem);
+                    });
+                    dayDiv.appendChild(exercisesList);
+                } else {
+                    const workoutDetail = document.createElement('p');
+                    workoutDetail.innerText = `${key}: ${workout[key]}`;
+                    dayDiv.appendChild(workoutDetail);
+                }
+            }
+
+            weekDiv.appendChild(dayDiv);
+        }
+        
+        workoutResponse.appendChild(weekDiv);
+    }
+}
+
+
+</script>
+
+
+{% endblock %}

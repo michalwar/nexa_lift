@@ -1,30 +1,18 @@
 import sys
+
 sys.path.append(r"D:\Projects\Git\nexa_lift")
 
 import os
 import openai
 import json
 
-from app.ai_module.prompts_eng import olympic_main_prompt
-
-from dotenv import load_dotenv
-
-
-load_dotenv(dotenv_path="./app/ai_module/.env")
-
-api_key = os.getenv("OPENAI_API_KEY")
-organization = os.getenv("OPENAI_ORG_ID")
-
 
 class OpenAIIntegration:
     """Class to interact with OpenAI's API."""
 
     def __init__(
-        self,
-        api_key: str,
-        organization: str,
-        model: str = "gpt-3.5-turbo-16k"
-        ):
+        self, api_key: str, organization: str, model: str = "gpt-3.5-turbo-16k"
+    ):
         """
         Initialize OpenAI Integration.
 
@@ -78,6 +66,21 @@ class OpenAIIntegration:
         return contents
 
 
+"""
+
+from app.ai_module.prompts_eng import olympic_main_prompt
+from app.ai_module.prompts_parse import parse_workout_response
+
+
+from dotenv import load_dotenv
+
+
+load_dotenv(dotenv_path="./app/ai_module/.env")
+
+api_key = os.getenv("OPENAI_API_KEY")
+organization = os.getenv("OPENAI_ORG_ID")
+
+
 # Example usage:
 if __name__ == "__main__":
     openai_integrator = OpenAIIntegration(
@@ -93,5 +96,4 @@ if __name__ == "__main__":
 
     else:
         print("Failed to get a response.")
-
-
+"""

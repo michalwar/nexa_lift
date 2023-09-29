@@ -6,7 +6,7 @@
 #promopt_context = f"""CONTEXT: Perform TASK based on the historical workout plans: {historical_workout};"""
 
 
-format_response = """
+_format_response = """
 **Response Template for Workout Plan**
 
 - **Week #[number]**:
@@ -24,6 +24,28 @@ format_response = """
 
 Please fill in the [brackets] with the appropriate information.
 """
+
+format_response = """
+Please fill in the [brackets] with the appropriate information:
+    "Week #[number]": {
+        "Day #[number]": {
+            "Workout Name": "[Workout Name or Description]",
+            "Intensity": "[Intensity Level e.g. High/Moderate/Low]",
+            "Reasoning": "[Brief reasoning behind the workout's purpose]",
+            "Exercises": [
+                {
+                    "Exercise": "[Exercise Name]", 
+                    "Sets": [Number of Sets], 
+                    "Reps": [Number of Repetitions], 
+                    "Tempo": "[Tempo, e.g., 2-1-1]", 
+                    "Rest": "[Rest Period]", 
+                    "Muscle Group": "[Targeted Muscle Group]"
+                    },
+            ]
+        },
+    },
+"""
+
 
 
 historical_workout = """
