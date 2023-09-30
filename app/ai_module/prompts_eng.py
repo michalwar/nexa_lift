@@ -26,7 +26,7 @@ Please fill in the [brackets] with the appropriate information.
 """
 
 format_response = """
-Please fill in the [brackets] with the appropriate information:
+Please fill in the [brackets] with the appropriate information and don't add any extra text:
     "Week #[number]": {
         "Day #[number]": {
             "Workout Name": "[Workout Name or Description]",

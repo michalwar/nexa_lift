@@ -32,12 +32,17 @@ def index():
             except json.JSONDecodeError:
                 return jsonify(error="Invalid response format"), 400
 
-            return jsonify(response_json)  # use jsonify to be explicit
+            return jsonify(response_json)  # use jsonify to return a json response
+
+        else:
+            response = "Please enter a workout query"
+            jsonify(response)
 
     return render_template('index.html')
 
 
-potential_workout_plans = """{
+potential_workout_plans = """
+{
 "Week 1": {
 "Day 1": {
 "Exercises": [
