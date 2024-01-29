@@ -26,7 +26,7 @@ Please fill in the [brackets] with the appropriate information.
 """
 
 format_response = """
-Please fill in the [brackets] with the appropriate information and don't add any extra text:
+Please fill in the [brackets] with the appropriate information, don't add any extra or additional text nor information outside of the [brackets], and make sure to follow the format below is followed exactly in the JSON format:
     "Week #[number]": {
         "Day #[number]": {
             "Workout Name": "[Workout Name or Description]",

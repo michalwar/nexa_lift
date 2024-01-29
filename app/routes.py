@@ -2,6 +2,7 @@
 import sys
 import os
 import json
+import re
 from flask import jsonify
 
 sys.path.append(r"D:\Projects\Git\nexa_lift")
@@ -9,6 +10,7 @@ sys.path.append(r"D:\Projects\Git\nexa_lift")
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path="./app/ai_module/.env")
+#load_dotenv(dotenv_path="./ai_module/.env")
 
 from flask import request, render_template
 from app import app
@@ -17,26 +19,32 @@ from app.ai_module.prompts_eng import olympic_main_prompt
 
 api_key = os.getenv("OPENAI_API_KEY")
 organization = os.getenv("OPENAI_ORG_ID")
-openai_integrator = OpenAIIntegration(api_key, organization)
+openai_integrator = OpenAIIntegration(api_key, organization, model= "gpt-3.5-turbo-1106")#, model="gpt-4-1106-preview")
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'], endpoint='index')
 def index():
     if request.method == 'POST':
         workout_query = request.form.get('workout_query')
         if workout_query:
             #response = openai_integrator.get_response(olympic_main_prompt)
-
             response = potential_workout_plans
+              
             try:
-                response_json = json.loads(response.replace("{...}", "null"))
+                #response = re.sub("json", "", response)
+                #response = re.sub("```", "", response)
+                #response = re.sub("{...}", "", response)
+                response = re.sub(r"(```json|```|\n|\r|//.*?$)", "", response, flags=re.MULTILINE)
+
+                #response_j = openai_integrator.get_response("Don't provide any additional text nor information, only convert to JSON format" + response)
+                response_json = json.loads(response_j)
             except json.JSONDecodeError:
                 return jsonify(error="Invalid response format"), 400
-
-            return jsonify(response_json)  # use jsonify to return a json response
+            
+            return jsonify(response)  # use jsonify to return a json response
 
         else:
             response = "Please enter a workout query"
-            jsonify(response)
+            return jsonify(message=response)  # return the message in a JSON response
 
     return render_template('index.html')
 

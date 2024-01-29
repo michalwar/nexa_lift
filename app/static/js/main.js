@@ -23,7 +23,7 @@ document.getElementById('workoutForm').addEventListener('submit', function(e) {
         }
         return response.json();})
     .then(data => {
-        displayWorkoutData(data);
+        displayWorkoutData2(data);
         document.getElementById('workoutResponse').scrollIntoView({ behavior: 'smooth' });
 
         // Hide spinner once data is displayed
@@ -90,4 +90,14 @@ function displayWorkoutData(data) {
         
         workoutResponse.appendChild(weekDiv);
     }
+}
+
+function displayWorkoutData2(data) {
+    const workoutResponse = document.getElementById('workoutResponse');
+    
+    // Convert the JSON object to a readable string
+    const dataString = JSON.stringify(data, null, 2); // The '2' here adds indentation for readability
+
+    // Display the string in a preformatted text block
+    workoutResponse.innerHTML = `<pre>${dataString}</pre>`;
 }

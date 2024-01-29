@@ -1,9 +1,8 @@
-import sys
-
-sys.path.append(r"D:\Projects\Git\nexa_lift")
+#import sys
+#sys.path.append(r"D:\Projects\Git\nexa_lift")
 
 import os
-import openai
+from openai import OpenAI
 import json
 
 
@@ -11,7 +10,7 @@ class OpenAIIntegration:
     """Class to interact with OpenAI's API."""
 
     def __init__(
-        self, api_key: str, organization: str, model: str = "gpt-3.5-turbo-16k"
+        self, api_key: str, organization: str, model: str
     ):
         """
         Initialize OpenAI Integration.
@@ -32,8 +31,11 @@ class OpenAIIntegration:
             )
 
         # Set up the OpenAI configuration
-        openai.api_key = self.api_key
-        openai.organization = self.organization
+        self.client = OpenAI(
+            api_key=self.api_key,
+            organization=self.organization,
+        )
+
 
     def get_response(self, prompt: str) -> str:
         """
@@ -50,8 +52,9 @@ class OpenAIIntegration:
         messages = [{"role": "user", "content": prompt}]
 
         try:
-            response = openai.ChatCompletion.create(model=self.model, messages=messages)
-            return response["choices"][0]["message"]["content"]
+            response = self.client.chat.completions.create(model=self.model, messages=messages)
+            return response.choices[0].message.content
+
         except openai.error.OpenAIError as e:
             # Log the exception for debugging or monitoring purposes
             print(f"OpenAI Error: {e}")
